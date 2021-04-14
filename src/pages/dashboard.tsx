@@ -1,5 +1,5 @@
 import { Box, Flex, SimpleGrid, Text, theme } from "@chakra-ui/react";
-import { Header } from "../components/Header";
+import { Header } from "../components/Header/index";
 import { Sidebar } from "../components/Sidebar";
 import dynamic from "next/dynamic";
 
