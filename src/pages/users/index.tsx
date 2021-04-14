@@ -42,11 +42,11 @@ export default function UserList() {
             </Button>
           </Flex>
 
-          <Table colorSchema="whiteAlpha">
+          <Table colorScheme="whiteAlpha">
             <Thead>
               <Tr>
                 <Th px="6" color="gray.300" width="8">
-                  <Checkbox></Checkbox>
+                  <Checkbox colorScheme="pink" />
                 </Th>
                 <Th>User</Th>
                 <Th>Created At</Th>
@@ -56,7 +56,7 @@ export default function UserList() {
             <Tbody>
               <Tr>
                 <Td px="6">
-                  <Checkbox colorSchema="pink" />
+                  <Checkbox colorScheme="pink" />
                 </Td>
                 <Td>
                   <Box>
