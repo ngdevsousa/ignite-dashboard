@@ -11,7 +11,8 @@ import {
   Text,
   Th,
   Thead,
-  Tr
+  Tr,
+  useBreakpointValue
 } from "@chakra-ui/react";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
 import { Header } from "../../components/Header/index";
@@ -19,6 +20,11 @@ import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
 
 export default function UserList() {
+  const isWideScreen = useBreakpointValue({
+    base: false,
+    lg: true
+  });
+
   return (
     <Box>
       <Header />
@@ -45,17 +51,17 @@ export default function UserList() {
           <Table colorScheme="whiteAlpha">
             <Thead>
               <Tr>
-                <Th px="6" color="gray.300" width="8">
+                <Th px={["4", "4", "6"]} color="gray.300" width="8">
                   <Checkbox colorScheme="pink" />
                 </Th>
                 <Th>User</Th>
-                <Th>Created At</Th>
+                {isWideScreen && <Th>Created At</Th>}
                 <Th width="8"> </Th>
               </Tr>
             </Thead>
             <Tbody>
               <Tr>
-                <Td px="6">
+                <Td px={["4", "4", "6"]}>
                   <Checkbox colorScheme="pink" />
                 </Td>
                 <Td>
@@ -66,7 +72,7 @@ export default function UserList() {
                     </Text>
                   </Box>
                 </Td>
-                <Td>04 April, 2021</Td>
+                {isWideScreen && <Td>04 April, 2021</Td>}
                 <Td>
                   <Button
                     as="a"
@@ -75,7 +81,7 @@ export default function UserList() {
                     colorScheme="green"
                     rightIcon={<Icon as={RiPencilLine} fontSize="14" />}
                   >
-                    Edit
+                    {isWideScreen ? "Edit" : ""}
                   </Button>
                 </Td>
               </Tr>
