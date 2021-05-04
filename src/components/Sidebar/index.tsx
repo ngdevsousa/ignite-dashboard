@@ -13,12 +13,12 @@ export function Sidebar() {
     <Box as="aside" w="64" mr="8">
       <Stack spacing="12" align="flex-start">
         <NavSection title="General">
-          <NavLink icon={RiDashboardLine}>Dashboard</NavLink>
-          <NavLink icon={RiContactsLine}>Users</NavLink>
+          <NavLink href="/dashboard" icon={RiDashboardLine}>Dashboard</NavLink>
+          <NavLink href="/users" icon={RiContactsLine}>Users</NavLink>
         </NavSection>
         <NavSection title="Deployments">
-          <NavLink icon={RiInputMethodLine}>Forms</NavLink>
-          <NavLink icon={RiGitMergeLine}>Branchs</NavLink>
+          <NavLink href="/forms" icon={RiInputMethodLine}>Forms</NavLink>
+          <NavLink href="/branchs" icon={RiGitMergeLine}>Branchs</NavLink>
         </NavSection>
       </Stack>
     </Box>
