@@ -30,15 +30,15 @@ export default function Home() {
             name="email"
             type="email"
             label="email"
-            // error={errors.email}
-            // ref={...register("email")}
+            error={errors.email}
+            {...register("email", { required: "Email required." })}
           />
           <Input
             name="password"
             type="password"
             label="password"
-            // error={errors.password}
-            // ref={register("password")}
+            error={errors.password}
+            {...register("password", { required: "Password required." })}
           />
           <Button
             type="submit"
