@@ -15,11 +15,8 @@ export function makeServer() {
     },
     factories: {
       user: Factory.extend({
-        id(index: number) {
-          return index;
-        },
-        name() {
-          return `${faker.name.firstName()} ${faker.name.lastName()}`;
+        name(index: number) {
+          return `User ${index}`;
         },
         email() {
           return faker.internet.email().toLocaleLowerCase();
@@ -30,7 +27,7 @@ export function makeServer() {
       })
     },
     seeds(server) {
-      server.createList("user", 200);
+      server.createList("user", 10);
     },
     routes() {
       this.namespace = "api";
