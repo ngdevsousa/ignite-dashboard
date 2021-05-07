@@ -39,24 +39,30 @@ export default function UserList() {
     base: false,
     lg: true
   });
-  const { data, isLoading, error } = useQuery("users-list", async () => {
-    const res = await fetch("http://localhost:3000/api/users");
-    const data: UsersResponse = await res.json();
-    const users = data.users.map((user) => {
-      return {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        createdAt: new Date(user.createdAt).toLocaleString("pt-BR", {
-          day: "2-digit",
-          month: "long",
-          year: "numeric"
-        })
-      };
-    });
+  const { data, isLoading, error } = useQuery(
+    "users-list",
+    async () => {
+      const res = await fetch("http://localhost:3000/api/users");
+      const data: UsersResponse = await res.json();
+      const users = data.users.map((user) => {
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          createdAt: new Date(user.createdAt).toLocaleString("pt-BR", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric"
+          })
+        };
+      });
 
-    return users;
-  });
+      return users;
+    },
+    {
+      staleTime: 1000 * 5
+    }
+  );
 
   return (
     <Box>
