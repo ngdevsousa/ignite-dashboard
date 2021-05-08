@@ -13,8 +13,12 @@ interface UsersResponse {
   users: Array<User>;
 }
 
-export async function getUsers(): Promise<Array<User>> {
-  const { data } = await api.get<UsersResponse>("/users");
+interface PaginatedUsers extends UsersResponse {
+  totalCount: number;
+}
+
+export async function getUsers(page: number): Promise<PaginatedUsers> {
+  const { data, headers } = await api.get<UsersResponse>(`/users?page=${page}`);
   const users = data.users.map((user) => {
     return {
       id: user.id,
@@ -23,12 +27,13 @@ export async function getUsers(): Promise<Array<User>> {
       createdAt: formatDate(user.createdAt)
     };
   });
+  const totalCount = Number(headers["x-total-count"]);
 
-  return users;
+  return { users, totalCount };
 }
 
-export function useUsers() {
-  return useQuery("users-list", getUsers, {
+export function useUsers(page: number) {
+  return useQuery(["users", page], () => getUsers(page), {
     staleTime: 1000 * 5
   });
 }
