@@ -24,10 +24,19 @@ import { Sidebar } from "../../components/Sidebar";
 import { useUsers } from "../../services/hooks/useUsers";
 import { queryClient } from "../../services/queryClient";
 import api from "../../services/users/index";
+import { User } from "../../services/users/types";
 
-export default function UserList() {
+interface UserListProps {
+  initialData: {
+    users: Array<User>;
+    totalCount: number;
+  };
+}
+export default function UserList({ initialData }: UserListProps) {
   const [page, setPage] = useState(1);
-  const { data, isLoading, isFetching, error } = useUsers(page);
+  const { data, isLoading, isFetching, error } = useUsers(page, {
+    initialData
+  });
   const isWideScreen = useBreakpointValue({
     base: false,
     lg: true
@@ -108,7 +117,7 @@ export default function UserList() {
                             </Text>
                           </Box>
                         </Td>
-                        {isWideScreen && <Td>{user.createdAt}</Td>}
+                        {isWideScreen && <Td>{user.created_at}</Td>}
                         <Td>
                           <Button
                             as="a"
@@ -138,3 +147,13 @@ export default function UserList() {
     </Box>
   );
 }
+
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   const users = await getUsers(1);
+
+//   return {
+//     props: {
+//       initialData: users
+//     }
+//   };
+// };

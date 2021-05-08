@@ -1,6 +1,6 @@
-import { useQuery } from "react-query";
+import { useQuery, UseQueryOptions } from "react-query";
 import { formatDate } from "../dates";
-import { UsersResponse } from "../users/types";
+import { User, UsersResponse } from "../users/types";
 import api from "../users/index";
 
 interface PaginatedUsers extends UsersResponse {
@@ -14,7 +14,7 @@ export async function getUsers(page: number): Promise<PaginatedUsers> {
       id: user.id,
       name: user.name,
       email: user.email,
-      createdAt: formatDate(user.created_at)
+      created_at: formatDate(user.created_at)
     };
   });
   const totalCount = Number(headers["x-total-count"]);
@@ -22,8 +22,18 @@ export async function getUsers(page: number): Promise<PaginatedUsers> {
   return { users, totalCount };
 }
 
-export function useUsers(page: number) {
-  return useQuery(["users", page], () => getUsers(page), {
-    staleTime: 1000 * 5
-  });
+export function useUsers(
+  page: number,
+  options: UseQueryOptions<PaginatedUsers>
+) {
+  return useQuery<PaginatedUsers>(
+    ["users", page],
+    async () => {
+      return getUsers(page);
+    },
+    {
+      staleTime: 1000 * 5,
+      ...options
+    }
+  );
 }
