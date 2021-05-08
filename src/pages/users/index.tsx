@@ -33,7 +33,7 @@ export default function UserList() {
     lg: true
   });
 
-  async function handlePreFetch(userId: number) {
+  async function handlePreFetch(userId: string) {
     await queryClient.prefetchQuery(
       ["user", userId],
       async () => {
@@ -116,7 +116,7 @@ export default function UserList() {
                             fontSize="sm"
                             colorScheme="green"
                             rightIcon={<Icon as={RiPencilLine} fontSize="14" />}
-                            onMouseEnter={() => handlePreFetch(Number(user.id))}
+                            onMouseEnter={() => handlePreFetch(user.id)}
                           >
                             {isWideScreen ? "Edit" : ""}
                           </Button>

@@ -14,7 +14,7 @@ export async function getUsers(page: number): Promise<PaginatedUsers> {
       id: user.id,
       name: user.name,
       email: user.email,
-      createdAt: formatDate(user.createdAt)
+      createdAt: formatDate(user.created_at)
     };
   });
   const totalCount = Number(headers["x-total-count"]);
