@@ -22,14 +22,27 @@ import { Header } from "../../components/Header/index";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
 import { useUsers } from "../../services/hooks/useUsers";
+import { queryClient } from "../../services/queryClient";
+import api from "../../services/users/index";
 
 export default function UserList() {
   const [page, setPage] = useState(1);
+  const { data, isLoading, isFetching, error } = useUsers(page);
   const isWideScreen = useBreakpointValue({
     base: false,
     lg: true
   });
-  const { data, isLoading, isFetching, error } = useUsers(page);
+
+  async function handlePreFetch(userId: number) {
+    await queryClient.prefetchQuery(
+      ["user", userId],
+      async () => {
+        const { data } = await api.findById(userId);
+        return data;
+      },
+      { staleTime: 1000 * 60 * 5 }
+    );
+  }
 
   return (
     <Box>
@@ -103,6 +116,7 @@ export default function UserList() {
                             fontSize="sm"
                             colorScheme="green"
                             rightIcon={<Icon as={RiPencilLine} fontSize="14" />}
+                            onMouseEnter={() => handlePreFetch(Number(user.id))}
                           >
                             {isWideScreen ? "Edit" : ""}
                           </Button>

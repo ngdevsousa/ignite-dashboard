@@ -16,7 +16,7 @@ export function makeServer() {
     factories: {
       user: Factory.extend({
         name(index: number) {
-          return `User ${index}`;
+          return `User ${index + 1}`;
         },
         email() {
           return faker.internet.email().toLocaleLowerCase();
@@ -45,6 +45,7 @@ export function makeServer() {
 
         return new Response(200, { "x-total-count": String(total) }, { users });
       });
+      this.get("/users/:id");
       this.post("/users");
 
       // Used to avoid conflict with nextjs

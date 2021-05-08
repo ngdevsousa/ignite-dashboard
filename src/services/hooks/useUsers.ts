@@ -1,24 +1,14 @@
 import { useQuery } from "react-query";
-import { api } from "../api";
 import { formatDate } from "../dates";
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  createdAt: Date | string;
-}
-
-interface UsersResponse {
-  users: Array<User>;
-}
+import { UsersResponse } from "../users/types";
+import api from "../users/index";
 
 interface PaginatedUsers extends UsersResponse {
   totalCount: number;
 }
 
 export async function getUsers(page: number): Promise<PaginatedUsers> {
-  const { data, headers } = await api.get<UsersResponse>(`/users?page=${page}`);
+  const { data, headers } = await api.find(page);
   const users = data.users.map((user) => {
     return {
       id: user.id,
